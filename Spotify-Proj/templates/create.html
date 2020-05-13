@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% block head %}
+<title>mYOUsic</title>
+{% endblock %}
+
+{% block body %}
+<h1 class = " margin-box">Authenticated</h1>
+    <div class="input-group mb-3">
+        <input id = "playlist-name" type="text" class="form-control" placeholder="Playlist Name" aria-label="Playlist Name" aria-describedby="basic-addon2">
+        <div class="input-group-append bg-white">
+            <button onclick="printCreate()" class="btn btn-outline-secondary" type="button">Create!</button>
+        </div>
+    </div>
+    <div class = "row justify-content-center align-items-center">
+            <!-- Load Songs From app.py (onClick to go through) -->
+                <div class="col-sm">
+                    <iframe class = "padding-player" id = "player" src="" width="500" height="500" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                </div>
+                <div class="col-sm text-center">
+                    <button class="btn btn-primary btn-lg" onclick="goThroughSongs({{songs}})">Next</button>
+                    <button class="btn btn-secondary btn-lg" onclick="printIndex()">Add Song</button>
+                </div>
+    </div>
+    <div class = "row justify-content-center align-items-center">
+        <div class="col-sm text-center">
+            <button class="btn btn-secondary btn-lg" onclick="printIndex()">Generate New Songs</button>
+        </div>
+    </div>
+
+{% endblock %}

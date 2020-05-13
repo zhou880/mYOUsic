@@ -28,7 +28,7 @@ def _deactivate(args):
 _deactivate(["nondestructive"])
 aliases["deactivate"] = _deactivate
 
-$VIRTUAL_ENV = r"/Users/tzhou1/Documents/SpotifyAPI/FlaskApp/Spotify-Proj"
+$VIRTUAL_ENV = r"/Users/tzhou1/Documents/SpotifyAPI/FlaskApp/SpotifyWebApp/Spotify-Proj"
 
 $_OLD_VIRTUAL_PATH = $PATH
 $PATH = $PATH[:]

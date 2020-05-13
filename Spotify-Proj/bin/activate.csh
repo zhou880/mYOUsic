@@ -10,7 +10,7 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV '/Users/tzhou1/Documents/SpotifyAPI/FlaskApp/Spotify-Proj'
+setenv VIRTUAL_ENV '/Users/tzhou1/Documents/SpotifyAPI/FlaskApp/SpotifyWebApp/Spotify-Proj'
 
 set _OLD_VIRTUAL_PATH="$PATH:q"
 setenv PATH "$VIRTUAL_ENV:q/bin:$PATH:q"

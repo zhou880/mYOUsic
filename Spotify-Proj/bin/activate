@@ -46,7 +46,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV='/Users/tzhou1/Documents/SpotifyAPI/FlaskApp/Spotify-Proj'
+VIRTUAL_ENV='/Users/tzhou1/Documents/SpotifyAPI/FlaskApp/SpotifyWebApp/Spotify-Proj'
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

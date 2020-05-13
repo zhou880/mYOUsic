@@ -1,4 +1,4 @@
-#!/Users/tzhou1/Documents/SpotifyAPI/FlaskApp/Spotify-Proj/bin/python
+#!/Users/tzhou1/Documents/SpotifyAPI/FlaskApp/SpotifyWebApp/Spotify-Proj/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

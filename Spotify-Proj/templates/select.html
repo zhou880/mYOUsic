@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>mYOUsic</title>
+{% endblock %}
+
+{% block body %}
+<container>
+    <div class="position-relative overflow-auto p-3 p-md-5 m-md-3 text-center">
+        <h1>Choose an Option</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow bg-white padding-box full-height">
+                    <h4>Playlist Creator</h4>
+                        <div class="card-body">
+                            <p class="card-text">Create a new playlist by accepting/denying song suggestions that are not in any of your previous playlists!</p>
+                                <div class="button-center align-items-center">
+                                    <a type="button" href = "/create" class="btn btn-bg btn-outline-secondary">Select</a>
+                                </div>
+                        </div>
+                </div>
+            </div>
+        
+
+        <div class="col-md-4">
+            <div class="card mb-4 box-shadow bg-white padding-box full-height">
+                <h4>Coming Soon</h4>
+                    <div class="card-body">
+                    <p class="card-text">Coming Out Soon!</p>
+                        <div class="align-items-center button-center">
+                            <a type="button" href = "#" class="btn btn-bg btn-outline-secondary ">N/A</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mb-4 box-shadow bg-white padding-box full-height">
+                <h4>Coming Soon</h4>
+                    <div class="card-body">
+                    <p class="card-text">Coming Out Soon!</p>
+                        <div class="button-center align-items-center">
+                            <a type="button" href = "#" class="btn btn-bg btn-outline-secondary">N/A</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+    </div>
+</container>
+{% endblock %}
