@@ -9,4 +9,4 @@ SECRET_KEY = 'this is very secret'
 
 #Pick PICK artists/songs out of top N
 PICK = 2 
-N = 8
+N = 7

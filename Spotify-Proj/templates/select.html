@@ -14,9 +14,15 @@
                     <h4>Playlist Creator</h4>
                         <div class="card-body">
                             <p class="card-text">Create a new playlist by accepting/denying song suggestions that are not in any of your previous playlists!</p>
-                                <div class="button-center align-items-center">
-                                    <a type="button" href = "/create" class="btn btn-bg btn-outline-secondary">Select</a>
+                            <div class="input-group mb-3">
+                                <input id = "playlist-name" type="text" class="form-control" placeholder="Playlist Name" aria-label="Playlist Name" aria-describedby="basic-addon2">
+                                <div class="input-group-append bg-white">
+                                    <button onclick ="getPlaylistName()" class="btn btn-outline-secondary" type="button">Create!</button>
                                 </div>
+                            </div>
+                            <div class="button-center align-items-center">
+                                <a type="button" href = "/create" class="btn btn-bg btn-outline-secondary">Select</a>
+                            </div>
                         </div>
                 </div>
             </div>

@@ -10,7 +10,11 @@ function printIndex(){
     console.log(index);
 }
 
-function printCreate(){
-    var name = document.getElementById('playlist-name').value;
-    console.log(name);
+function getPlaylistName(){
+    name = document.getElementById('playlist-name').value;
+}
+function displayPlaylistName(){
+    if (/create/.test(window.location.href) == true) {
+        document.getElementById("display-playlist-name").innerHTML = name;
+    }
 }
