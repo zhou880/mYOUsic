@@ -12,21 +12,36 @@
 {% endblock %}
 
 {% block body %}
-<div class = "position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center">
-    <h1 class = " margin-box">Playlist Maker for <span class = "you" id = "display-playlist-name" ></span>!</h1>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Instructions!</strong>
+    <ul>
+        <li>Click "Generate New Songs" and "Next" to cycle through songs unique to you. </li>
+        <li>Click "Add Song" to add the current song to the named playlist.</li>
+        <li>Tired of the current song theme? Press "Generate New Songs" again to get a new cycle of personalized songs!</li>
+    </ul>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<div class = "position-relative overflow-hidden p-2 m-md-2 text-center">
+    <h1 class = "display-4 font-weight-normal white-text margin-box">Playlist Maker for <span class = "you" >{{session['playlist-name']}}</span>!</h1>
 </div>
 <div class = "row justify-content-center align-items-center">
         <!-- Load Songs From app.py (onClick to go through) -->
-            <div class="col-sm">
+            <div class="col-lg">
                 <iframe class = "padding-player" id = "player" src="" width="500" height="500" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
             </div>
-            <div class="col-sm text-center">
-                <button class="btn btn-primary btn-lg" onclick="goThroughSongs({{songs}})">Next</button>
-                <button class="btn btn-secondary btn-lg" onclick="printIndex()">Add Song</button>
+            <div class="col-lg text-center">
+                <button class="btn btn-danger btn-lg" onclick="goThroughSongs({{songs}})">Next</button>
+                <button class="btn btn-success btn-lg" onclick="printIndex()">Add Song</button>
             </div>
 </div>
-<div class = "row justify-content-center align-items-center">
-    <div class="col-sm text-center">
-        <button class="btn btn-secondary btn-lg" onclick="printIndex()">Generate New Songs</button>
-    </div>
+
+<div class = "row justify-content-center align-items-center margin-box">
+    <form action="/create" method="post">
+        <div class="col-sm text-center">
+            <button class="btn btn-secondary btn-lg" onclick="printIndex()">Generate New Songs</button>
+        </div>
+    </form>
+</div>
 {% endblock %}

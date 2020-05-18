@@ -33,3 +33,15 @@ class PlaylistGenerator:
             else:
                 filtered.append(track)
         return filtered
+    def create(self, username, playlist_name):
+        params = {
+            'name': playlist_name
+        }
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer {}'.format(self.token)
+        }
+        r = requests.post('https://api.spotify.com/v1/users/{}/playlists'.format(username), data = json.dumps(params), headers = headers)
+        json_data = json.loads(r.text)
+        return json_data['id']
+        
