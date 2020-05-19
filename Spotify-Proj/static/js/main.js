@@ -15,7 +15,6 @@ function printIndex(){
 
 $(function() {
     $('button#add').on('click', function() {
-        console.log(currSong)
         event.preventDefault();
         $.ajax({
             type: 'POST',

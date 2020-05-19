@@ -24,28 +24,30 @@
     </button>
   </div>
 <div class = "position-relative overflow-hidden p-2 m-md-2 text-center">
-    <h1 class = "display-4 font-weight-normal white-text margin-box">Playlist Maker for <span class = "you" >{{session['playlist-name']}}</span>!</h1>
+    <h1 class = "display-4 font-weight-bold msic margin-box">m<span class = "you">YOU</span>sic <span class = "white-text">for</span> <span class = "you" >{{session['playlist-name']}}</span>!</h1>
 </div>
 <div class = "row justify-content-center align-items-center">
         <!-- Load Songs From app.py (onClick to go through) -->
-            <div class="col-lg">
-                <iframe class = "padding-player" id = "player" src="" width="500" height="500" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="col-lg margin-box padding-box">
+                <iframe class = "padding-player" id = "player" src=""height="500" width = "450" allowtransparency="true" allow="encrypted-media"></iframe>
             </div>
             
-                <div class="col-lg text-center">
-                    <button class="btn btn-danger btn-lg" onclick="goThroughSongs({{songs}})">Next</button>
-                    <form action="\create" method="post">
-                        <button id = "add" class="btn btn-success btn-lg" onclick="printIndex()">Add Song</button>
+            <div class="col-lg text-center custom-height-full margin-box padding-box">
+                <div class = "row">
+                        <button class="btn btn-danger half-width custom-height-half" onclick="goThroughSongs({{songs}})"><h3>Next</h3></button>
+                        <form action="\create" method="post" class = "half-width">
+                            <button id = "add" class="btn btn-success full-width custom-height-half" onclick="printIndex()"><h3>Add Song</h3></button>
+                        </form>
+                </div>
+                <div class = "row">
+                    <form action="/create" method="post" class = "full-width">
+                            <button class="btn btn-info full-width custom-height-half" name = "btn" value = "generate-songs" onclick="printIndex()"><h3>Generate New Songs</h3></button>
                     </form>
                 </div>
+
+            </div>
             
 </div>
-<div class = "row justify-content-center align-items-center margin-box">
-    <form action="/create" method="post">
-        <div class="col-sm text-center">
-            <button class="btn btn-secondary btn-lg" name = "btn" value = "generate-songs" onclick="printIndex()">Generate New Songs</button>
-        </div>
-    </form>
-</div>
+
 
 {% endblock %}

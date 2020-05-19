@@ -5,7 +5,7 @@ SCOPE = 'playlist-read-private playlist-read-collaborative user-top-read playlis
 CLI_ID = 'a9cbe2388645499ab83dc1cae6ca99d8'
 CLI_SEC = '36c83a329b5b409ba995a85067cb92cb'
 SHOW_DIALOG = True #make False when deploying
-SECRET_KEY = 'this is very secret'
+SECRET_KEY = '&Np]Y>TBF:T&>LBsq,4:s.\_8RU")@h3HT*vT%R]hv^va}'
 
 #Pick PICK artists/songs out of top N
 PICK = 2 

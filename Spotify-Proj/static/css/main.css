@@ -18,12 +18,20 @@ html, body {
     padding: 15px;
 }
 .margin-box{
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin:25px;
 
 }
 .full-height{
     height:100%;
+}
+.half-height{
+    height:50%;
+}
+.half-width{
+    width:50%
+}
+.full-width{
+    width:100%;
 }
 .padding-player{
     padding: 25px;
@@ -37,3 +45,17 @@ html, body {
 span.you{
     color : #1586BA;
 }
+.custom-height-half{
+    height:150px;
+}
+.custom-height-full{
+    height:100%;
+}
+button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px black;
+    transform: translateY(4px);
+  }
+  button h3{
+    font-variant: small-caps
+  }

@@ -61,26 +61,31 @@ def select():
 
 @app.route("/create", methods=['GET', 'POST'])
 def create():
-    token = session['toke']
-    user = UserInfo(token)
-    playlist = PlaylistGenerator(token)
-    filtered_songs = []
-    if request.method == "POST":
-        if request.form.get('btn') == 'generate-songs': #Generate new songs option was selected
-            #
-            playlist_list = user.getPlaylists()
-            doNotInclude = user.getSongs(playlist_list)
-            topNArtists, topNTracks = user.getTopNArtistsAndTracks(PICK, N)
-            
-            #PlaylistGeneration
-            tracklist = playlist.getSongRec(topNArtists, topNTracks)
-            filtered_songs = playlist.filter(tracklist, doNotInclude)
-            filtered_songs = json.dumps(filtered_songs) #format songs for 
-        else:
-            #Add song option was selected 
-            # **Note, ImmutableDict not applicable for the id = "add" form. Used ajax to retrieve song uri information from javascript var and so that page would not refresh
-            requested_song_uri = request.get_json()["song_id"]
-            playlist.addSong(session['playlist-id'], requested_song_uri)
+    try:
+        token = session['toke']
+        user = UserInfo(token)
+        playlist = PlaylistGenerator(token)
+        filtered_songs = []
+        if request.method == "POST":
+            if request.form.get('btn') == 'generate-songs': #Generate new songs option was selected
+                #
+                playlist_list = user.getPlaylists()
+                doNotInclude = user.getSongs(playlist_list)
+                topNArtists, topNTracks = user.getTopNArtistsAndTracks(PICK, N)
+                
+                #PlaylistGeneration
+                tracklist = playlist.getSongRec(topNArtists, topNTracks)
+                filtered_songs = playlist.filter(tracklist, doNotInclude)
+                filtered_songs = json.dumps(filtered_songs) #format songs for html file
+            else:
+                #Add song option was selected 
+                # **Note, ImmutableDict not applicable for the id = "add" form. Used ajax to retrieve song uri information from javascript var and so that page would not refresh
+                
+                requested_song_uri = request.get_json()["song_id"]
+                playlist.addSong(session['playlist-id'], requested_song_uri)
+                
+    except:
+        abort(500)
 
     return render_template('create.html', songs=filtered_songs)
 
