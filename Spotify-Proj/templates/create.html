@@ -31,17 +31,21 @@
             <div class="col-lg">
                 <iframe class = "padding-player" id = "player" src="" width="500" height="500" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
             </div>
-            <div class="col-lg text-center">
-                <button class="btn btn-danger btn-lg" onclick="goThroughSongs({{songs}})">Next</button>
-                <button class="btn btn-success btn-lg" onclick="printIndex()">Add Song</button>
-            </div>
+            
+                <div class="col-lg text-center">
+                    <button class="btn btn-danger btn-lg" onclick="goThroughSongs({{songs}})">Next</button>
+                    <form action="\create" method="post">
+                        <button id = "add" class="btn btn-success btn-lg" onclick="printIndex()">Add Song</button>
+                    </form>
+                </div>
+            
 </div>
-
 <div class = "row justify-content-center align-items-center margin-box">
     <form action="/create" method="post">
         <div class="col-sm text-center">
-            <button class="btn btn-secondary btn-lg" onclick="printIndex()">Generate New Songs</button>
+            <button class="btn btn-secondary btn-lg" name = "btn" value = "generate-songs" onclick="printIndex()">Generate New Songs</button>
         </div>
     </form>
 </div>
+
 {% endblock %}

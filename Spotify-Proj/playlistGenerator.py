@@ -44,4 +44,13 @@ class PlaylistGenerator:
         r = requests.post('https://api.spotify.com/v1/users/{}/playlists'.format(username), data = json.dumps(params), headers = headers)
         json_data = json.loads(r.text)
         return json_data['id']
+    def addSong(self, playlist_id, song_uri):
+        params = {
+            'uris': 'spotify:track:{}'.format(song_uri)
+        }
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer {}'.format(self.token)
+        }
+        r = requests.post('https://api.spotify.com/v1/playlists/{}/tracks'.format(playlist_id), params = params, headers = headers)
         

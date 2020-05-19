@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, flash, url_for, abort
+from flask import Flask, render_template, request, flash, redirect, session, url_for, abort, jsonify
 import requests
 import json
 
@@ -36,7 +36,7 @@ def callback():
     res_body = res.json()
     session["toke"] = res_body.get("access_token", None)
     if session["toke"] == None:
-        flash('Authentication not successful. Try again!')
+        
         return render_template('index.html')
     else:
         return redirect('/select')
@@ -48,6 +48,7 @@ def select():
         session['playlist-name'] = playlist_name
         print("Playlist {} created!".format(playlist_name))
         print("Username is {}".format(session['username']))
+        
         try:
             playlistGenerator = PlaylistGenerator(session['toke'])
             session['playlist-id'] = playlistGenerator.create(session['username'], session['playlist-name'])
@@ -60,18 +61,27 @@ def select():
 
 @app.route("/create", methods=['GET', 'POST'])
 def create():
+    token = session['toke']
+    user = UserInfo(token)
+    playlist = PlaylistGenerator(token)
     filtered_songs = []
     if request.method == "POST":
-        token = session['toke']
-        user = UserInfo(token)
-        playlist_list = user.getPlaylists()
-        doNotInclude = user.getSongs(playlist_list)
-        topNArtists, topNTracks = user.getTopNArtistsAndTracks(PICK, N)
-        #PlaylistGeneration
-        playlist = PlaylistGenerator(token)
-        tracklist = playlist.getSongRec(topNArtists, topNTracks)
-        filtered_songs = playlist.filter(tracklist, doNotInclude)
-        filtered_songs = json.dumps(filtered_songs) #format songs for html
+        if request.form.get('btn') == 'generate-songs': #Generate new songs option was selected
+            #
+            playlist_list = user.getPlaylists()
+            doNotInclude = user.getSongs(playlist_list)
+            topNArtists, topNTracks = user.getTopNArtistsAndTracks(PICK, N)
+            
+            #PlaylistGeneration
+            tracklist = playlist.getSongRec(topNArtists, topNTracks)
+            filtered_songs = playlist.filter(tracklist, doNotInclude)
+            filtered_songs = json.dumps(filtered_songs) #format songs for 
+        else:
+            #Add song option was selected 
+            # **Note, ImmutableDict not applicable for the id = "add" form. Used ajax to retrieve song uri information from javascript var and so that page would not refresh
+            requested_song_uri = request.get_json()["song_id"]
+            playlist.addSong(session['playlist-id'], requested_song_uri)
+
     return render_template('create.html', songs=filtered_songs)
 
 #Error Handling

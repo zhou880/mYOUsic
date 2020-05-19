@@ -1,8 +1,10 @@
 var index = 0;
+var currSong;
 var player = document.getElementById('player');
-function goThroughSongs(test) {
-        document.getElementById("player").src = "https://open.spotify.com/embed/track/"+ test[index];
-        index = (index + 1) % test.length ;
+function goThroughSongs(song) {
+        document.getElementById("player").src = "https://open.spotify.com/embed/track/"+ song[index];
+        currSong = {"song_id": song[index]}
+        index = (index + 1) % song.length ;
 };
 
 
@@ -10,9 +12,18 @@ function printIndex(){
     console.log(index);
 }
 
-function displayPlaylistName(){
-    console.log(sessionStorage.getItem('username'))
-    if (/create/.test(window.location.href) == true) {
-        document.getElementById("display-playlist-name").innerHTML = sessionStorage.getItem('playlist_name');
-    }
-}
+
+$(function() {
+    $('button#add').on('click', function() {
+        console.log(currSong)
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: '/create',
+            dataType : 'json',
+            data : JSON.stringify(currSong),
+        });      
+    });
+  });
+  
