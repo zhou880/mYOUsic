@@ -81,8 +81,8 @@ class UserInfo:
         }
         r = requests.get('https://api.spotify.com/v1/tracks/{}'.format(id), headers = headers)
         json_data = json.loads(r.text)
-        print(json_data['name'])
-        return
+        return (json_data['name'])
+        
     #print name of artist given id
     def printArtistNameFromID(self, id):
         headers = {
@@ -91,8 +91,8 @@ class UserInfo:
         }
         r = requests.get('https://api.spotify.com/v1/artists/{}'.format(id), headers = headers)
         json_data = json.loads(r.text)
-        print(json_data['name'])
-        return
+        return (json_data['name'])
+        
     #print name of playlist given id
     def printPlaylistNameFromID(self, id):
         headers = {
@@ -101,5 +101,5 @@ class UserInfo:
         }
         r = requests.get('https://api.spotify.com/v1/playlists/{}'.format(id), headers = headers)
         json_data = json.loads(r.text)
-        print(json_data['name'])
-        return
+        return (json_data['name'])
+        

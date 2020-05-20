@@ -15,8 +15,16 @@
                         <div class="card-body">
                             <p class="card-text">Create a new playlist by accepting/denying song suggestions that are <strong>not</strong> in any of your previous playlists!</p>
                             <form class = "p-3" action="" method="post" id = "playlist_frm">
-                                <input id = "playlist_name" class="form-control m-3 mx-auto" placeholder="Playlist Name" aria-label="Playlist Name" aria-describedby="basic-addon2" type="text" name="playlist-name" required>
-                                <input class="btn btn-bg btn-outline-secondary"type="submit" value = "Create">
+                                <input id = "playlist_name" name="playlist-name" class="form-control m-3 mx-auto" placeholder="Playlist Name" aria-label="Playlist Name" aria-describedby="basic-addon2" type="text"required>
+                                <input class="btn btn-bg btn-outline-secondary"type="submit" name = playlist-name-selector value = "Create">
+                            </form>
+                            <form class = "p-3" action="" method="post" id = "playlist_frm">
+                                <select class="custom-select custom-select-sm" name = "playlist-name-selector" value = "readable-name" id = "alternate_playlist_name">
+                                    {% for each in session['playlist-readable'] %}
+                                        <option value="{{each}}">{{each}}</option>
+                                    {% endfor %}
+                                </select>
+                                <input class="btn btn-bg btn-outline-secondary"type="submit">
                             </form>
                         </div>
                 </div>

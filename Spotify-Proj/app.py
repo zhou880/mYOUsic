@@ -39,55 +39,66 @@ def callback():
         
         return render_template('index.html')
     else:
-        return redirect('/select')
+        user = UserInfo(session['toke'])
+        playlist_list = user.getPlaylists()
+        session['playlist_list'] = playlist_list
+        playlist_readable = [user.printPlaylistNameFromID(playlist_list[i]) for i in range(len(playlist_list))] #not using dictionary because I want selection options to be sorted by creation time
+        session['playlist-readable'] = playlist_readable
+        return redirect(url_for('select'))
 
 @app.route("/select",  methods=['GET', 'POST'])
 def select():
     if request.method == "POST":
-        playlist_name = request.form['playlist-name']
-        session['playlist-name'] = playlist_name
-        print("Playlist {} created!".format(playlist_name))
-        print("Username is {}".format(session['username']))
-        
-        try:
-            playlistGenerator = PlaylistGenerator(session['toke'])
-            session['playlist-id'] = playlistGenerator.create(session['username'], session['playlist-name'])
-        except:
-            abort(500) #likely a wrong username
-        
+        if request.form.get('playlist-name-selector') == 'Create':
+            playlist_name = request.form['playlist-name']
+            session['playlist-name'] = playlist_name
+            print("Playlist {} created!".format(playlist_name))
+            print("Username is {}".format(session['username']))
+            
+            try:
+                playlistGenerator = PlaylistGenerator(session['toke'])
+                session['playlist-id'] = playlistGenerator.create(session['username'], session['playlist-name'])
+            except Exception as e:
+                print("Select Page")
+                print(e)
+                abort(500) #likely a wrong username
+        else:
+            requested_exisiting_playlist = request.form.get('playlist-name-selector')
+            session['playlist-name'] = requested_exisiting_playlist
+            index = session['playlist-readable'].index(requested_exisiting_playlist)
+    
+            session['playlist-id'] = session['playlist_list'][index]
+            
         return redirect(url_for('create'))
 
     return render_template('select.html')
 
 @app.route("/create", methods=['GET', 'POST'])
 def create():
-    try:
-        token = session['toke']
-        user = UserInfo(token)
-        playlist = PlaylistGenerator(token)
-        filtered_songs = []
-        if request.method == "POST":
-            if request.form.get('btn') == 'generate-songs': #Generate new songs option was selected
-                #
-                playlist_list = user.getPlaylists()
-                doNotInclude = user.getSongs(playlist_list)
-                topNArtists, topNTracks = user.getTopNArtistsAndTracks(PICK, N)
-                
-                #PlaylistGeneration
-                tracklist = playlist.getSongRec(topNArtists, topNTracks)
-                filtered_songs = playlist.filter(tracklist, doNotInclude)
-                filtered_songs = json.dumps(filtered_songs) #format songs for html file
-            else:
-                #Add song option was selected 
-                # **Note, ImmutableDict not applicable for the id = "add" form. Used ajax to retrieve song uri information from javascript var and so that page would not refresh
-                
-                requested_song_uri = request.get_json()["song_id"]
-                playlist.addSong(session['playlist-id'], requested_song_uri)
-                
-    except:
-        abort(500)
+    token = session['toke']
+    user = UserInfo(token)
+    playlist = PlaylistGenerator(token)
+    filtered_songs = []
+    message = ''
+    if request.method == "POST":
+        if request.form.get('btn') == 'generate-songs': #Generate new songs option was selected
+            playlist_list = session['playlist_list']
+            doNotInclude = user.getSongs(playlist_list)
+            topNArtists, topNTracks = user.getTopNArtistsAndTracks(PICK, N)
+            
+            #PlaylistGeneration
+            tracklist = playlist.getSongRec(topNArtists, topNTracks)
+            filtered_songs = playlist.filter(tracklist, doNotInclude)
+            filtered_songs = json.dumps(filtered_songs) #format songs for html file
+        else:
+            #Add song option was selected 
+            # **Note, ImmutableDict not applicable for the id = "add" form. Used ajax to retrieve song uri information from javascript var and so that page would not refresh
+            requested_song_uri = request.get_json()["song_id"]
+            status = playlist.addSong(session['playlist-id'], requested_song_uri)
+            if status:
+                print(status)
 
-    return render_template('create.html', songs=filtered_songs)
+    return render_template('create.html', songs = filtered_songs, message = message)
 
 #Error Handling
 @app.errorhandler(500)

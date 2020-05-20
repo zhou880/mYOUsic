@@ -53,4 +53,8 @@ class PlaylistGenerator:
             'Authorization': 'Bearer {}'.format(self.token)
         }
         r = requests.post('https://api.spotify.com/v1/playlists/{}/tracks'.format(playlist_id), params = params, headers = headers)
+        json_data = json.loads(r.text)
+        if json_data.get('error'):
+            return json_data.get('error').get('message')
+        return None
         
