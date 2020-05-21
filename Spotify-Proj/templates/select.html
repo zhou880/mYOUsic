@@ -13,18 +13,22 @@
                 <div class="card mb-4 box-shadow bg-white padding-box full-height">
                     <h4>Playlist Creator</h4>
                         <div class="card-body">
-                            <p class="card-text">Create a new playlist by accepting/denying song suggestions that are <strong>not</strong> in any of your previous playlists!</p>
-                            <form class = "p-3" action="" method="post" id = "playlist_frm">
-                                <input id = "playlist_name" name="playlist-name" class="form-control m-3 mx-auto" placeholder="Playlist Name" aria-label="Playlist Name" aria-describedby="basic-addon2" type="text"required>
+                            <p class="card-text">Accept/deny song suggestions that are <strong>not</strong> in any of your previous playlists!</p>
+                            <form class = "p-3" action="" method="post" id = "playlist_frm" autocomplete="off">
+                                <p class="card-text blue-text m-1 font-weight-bold"><u>Create new playlist:</u></p>
+                                <input id = "playlist_name" name="playlist-name" class="form-control m-1 mx-auto" placeholder="Playlist Name" aria-label="Playlist Name" aria-describedby="basic-addon2" type="text"required>
                                 <input class="btn btn-bg btn-outline-secondary"type="submit" name = playlist-name-selector value = "Create">
                             </form>
+                            <p class="m-0"><strong>or</strong></p>
                             <form class = "p-3" action="" method="post" id = "playlist_frm">
-                                <select class="custom-select custom-select-sm" name = "playlist-name-selector" value = "readable-name" id = "alternate_playlist_name">
+                                <p class="card-text blue-text m-1 font-weight-bold"><u>Add to existing playlist:</u></p>
+                                <select class=" form-control m-1 mx-auto custom-select custom-select-sm" name = "playlist-name-selector" value = "readable-name" id = "alternate_playlist_name">
                                     {% for each in session['playlist-readable'] %}
                                         <option value="{{each}}">{{each}}</option>
                                     {% endfor %}
                                 </select>
-                                <input class="btn btn-bg btn-outline-secondary"type="submit">
+                                <input class="btn btn-bg btn-outline-secondary"type="submit" value = "Add">
+                                <p class="card-text"><mark>**Must own the playlist!**</mark></p>
                             </form>
                         </div>
                 </div>
