@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, flash, redirect, session, url_for, abort, jsonify
+from flask import Flask, render_template, request, flash, redirect, session, url_for, jsonify
+from werkzeug.exceptions import HTTPException
 import requests
 import json
 
@@ -61,7 +62,6 @@ def select():
             except Exception as e:
                 print("Select Page")
                 print(e)
-                abort(500) #likely a wrong username
         else:
             requested_exisiting_playlist = request.form.get('playlist-name-selector')
             session['playlist-name'] = requested_exisiting_playlist
@@ -101,9 +101,12 @@ def create():
     return render_template('create.html', songs = filtered_songs, message = message)
 
 #Error Handling
-@app.errorhandler(500)
-def internal_error500(error):
-    return render_template('error500.html')
+@app.errorhandler(Exception)
+def bad_request(error):
+    # pass through HTTP errors
+    if isinstance(error, HTTPException):
+        return error
+    return render_template('error.html', error = error), 500
 
 if __name__ == '__main__':
     app.run(debug = True)

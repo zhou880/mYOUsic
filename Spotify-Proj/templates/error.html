@@ -8,10 +8,10 @@
 
 <div class="position-relative overflow-hidden  text-center">
     <div class=" p-lg-5 mx-auto my-5">
-        <h1 class="blue-text">
-            Internal Server Error: 500
+        <h1 class="white-text">
+            Error Description: {{error}}
         </h1>
-        <h5 class = "text-danger">The server encountered an internal error and was unable to process your request.</h5>
+        <h5 class = "text-danger">The server encountered an error and was unable to process your request.</h5>
         <h3>Please return to the homepage and make sure your entered username (<span class = "text-danger">{{session['username']}}</span>) matches your expected log-in username.</h3>
         <form class = "p-3" action="/">
             <input class="btn btn-lg btn-danger"type="submit" value = "Return to Homepage">
