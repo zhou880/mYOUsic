@@ -33,6 +33,7 @@ class PlaylistGenerator:
             else:
                 filtered.append(track)
         return filtered
+    #Return playlist id from playlist name
     def create(self, username, playlist_name):
         params = {
             'name': playlist_name
@@ -44,6 +45,7 @@ class PlaylistGenerator:
         r = requests.post('https://api.spotify.com/v1/users/{}/playlists'.format(username), data = json.dumps(params), headers = headers)
         json_data = json.loads(r.text)
         return json_data['id']
+    #Return any errors from adding son to selected playlist from "playlist_id"
     def addSong(self, playlist_id, song_uri):
         params = {
             'uris': 'spotify:track:{}'.format(song_uri)

@@ -9,6 +9,9 @@ from secrets import *
 
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
+#Pick PICK artists/songs out of top N
+PICK = 2 
+N = 5
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -30,21 +33,21 @@ def callback():
     res = requests.post(auth_token_url, data={
         "grant_type": "authorization_code",
         "code": code,
-        "redirect_uri":"http://127.0.0.1:5000/authenticate",
+        "redirect_uri":REDIRECT_URI,
         "client_id": CLI_ID,
         "client_secret": CLI_SEC
         })
     res_body = res.json()
-    session["toke"] = res_body.get("access_token", None)
+    session["toke"] = res_body.get("access_token", None) #access token for api calls
     if session["toke"] == None:
         
         return render_template('index.html')
     else:
         user = UserInfo(session['toke'])
         playlist_list = user.getPlaylists()
-        session['playlist_list'] = playlist_list
+        session['playlist_list'] = playlist_list #stores user playlist ids
         playlist_readable = [user.printPlaylistNameFromID(playlist_list[i]) for i in range(len(playlist_list))] #not using dictionary because I want selection options to be sorted by creation time
-        session['playlist-readable'] = playlist_readable
+        session['playlist-readable'] = playlist_readable #store user playlist names
         return redirect(url_for('select'))
 
 @app.route("/select",  methods=['GET', 'POST'])
@@ -52,9 +55,9 @@ def select():
     if request.method == "POST":
         if request.form.get('playlist-name-selector') == 'Create':
             playlist_name = request.form['playlist-name']
-            session['playlist-name'] = playlist_name
-            print("Playlist {} created!".format(playlist_name))
-            print("Username is {}".format(session['username']))
+            session['playlist-name'] = playlist_name #store created playlist name
+            #print("Playlist {} created!".format(playlist_name))
+            #print("Username is {}".format(session['username']))
             
             try:
                 playlistGenerator = PlaylistGenerator(session['toke'])
@@ -100,7 +103,7 @@ def create():
 
     return render_template('create.html', songs = filtered_songs, message = message)
 
-#Error Handling
+#Error Handling- Redirect all errors
 @app.errorhandler(Exception)
 def bad_request(error):
     # pass through HTTP errors
