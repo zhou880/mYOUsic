@@ -38,7 +38,8 @@ class UserInfo:
 
             entirePlaylist = json_data['items']
             for song in entirePlaylist:
-                doNotInclude[song['track']['id']] = 1
+                if song['track'] is not None:
+                    doNotInclude[song['track']['id']] = 1
         return doNotInclude
 
     #return pick artists/tracks from top N artists- currently set for medium term (up to 6 months)
